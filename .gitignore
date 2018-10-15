@@ -1,0 +1,14 @@
+# Electron Build
+gladius-electron-win32-x64
+
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# macOS
+.DS_Store
+
+# Innosetup
+*.exe
