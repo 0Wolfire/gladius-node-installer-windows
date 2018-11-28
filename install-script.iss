@@ -44,7 +44,7 @@ Name: "{sd}\Users\{username}\.gladius\content"
 
 [Files]
 Source: "gladius.exe";                       DestDir: "{app}";                                    Flags: ignoreversion
-Source: "gladius-network-gatewat.exe";       DestDir: "{app}";                                    Flags: ignoreversion
+Source: "gladius-network-gateway.exe";       DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-edged.exe";                 DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-guardian.exe";              DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-icon.ico";                  DestDir: "{app}";                                    Flags: ignoreversion
