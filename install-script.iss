@@ -44,8 +44,8 @@ Name: "{sd}\Users\{username}\.gladius\content"
 
 [Files]
 Source: "gladius.exe";                       DestDir: "{app}";                                    Flags: ignoreversion
-Source: "gladius-networkd.exe";              DestDir: "{app}";                                    Flags: ignoreversion
-Source: "gladius-controld.exe";              DestDir: "{app}";                                    Flags: ignoreversion
+Source: "gladius-network-gatewat.exe";       DestDir: "{app}";                                    Flags: ignoreversion
+Source: "gladius-edged.exe";                 DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-guardian.exe";              DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-icon.ico";                  DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-installer-icon.ico";        DestDir: "{app}";                                    Flags: ignoreversion
@@ -54,15 +54,12 @@ Source: "gladius-wizard-small-image.bmp";    DestDir: "{app}";                  
 Source: "LICENSE.txt";                       DestDir: "{app}";                                    Flags: ignoreversion
 Source: "AfterText.rtf";                     DestDir: "{app}";                                    Flags: ignoreversion
 Source: "README.md";                         DestDir: "{app}";                                    Flags: ignoreversion
-Source: "gladius-cli.toml";                  DestDir: "{sd}\Users\{username}\.gladius";           Flags: ignoreversion
-Source: "gladius-networkd.toml";             DestDir: "{sd}\Users\{username}\.gladius";           Flags: ignoreversion
 Source: "gladius-electron-win32-x64\*";      DestDir: "{app}\gladius-electron-win32-x64";         Flags: ignoreversion recursesubdirs createallsubdirs
-; Source: "C:\Users\gladius\Developer\gladius-node-installer\BeforeInfo.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\gladius-electron-win32-x64\{#MyAppExeName}"; IconFileName: "{app}\gladius-icon.ico"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\gladius-electron-win32-x64\{#MyAppExeName}"; IconFileName: "{app}\gladius-icon.ico"; Tasks: desktopicon
+Name: "{commondesktop}\{#MyAppName}";  Filename: "{app}\gladius-electron-win32-x64\{#MyAppExeName}"; IconFileName: "{app}\gladius-icon.ico"; Tasks: desktopicon
 
 [Registry]
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
@@ -141,23 +138,14 @@ end;
 
 
 [Run]
+; install guardian
 Filename: "{app}\gladius-guardian.exe"; Parameters:"install"; StatusMsg:"Installing Gladius Guardian as a service"; Flags: runascurrentuser runhidden
-; Filename: "{app}\networkd.exe"; Parameters:"install"; StatusMsg:"Installing GladiusNetworkDaemon as a service"; Flags: runascurrentuser runhidden
-; Filename: "{app}\controld.exe"; Parameters:"install"; StatusMsg:"Installing GladiusNodeControlDaemon as a service"; Flags: runascurrentuser runhidden
-
+; start guardian
 Filename: "{sys}\sc.exe"; Parameters: "start ""GladiusGuardian""" ; Flags: runascurrentuser runhidden
-
-; Filename: "{sys}\sc.exe"; Parameters: "start ""GladiusNodeControlDaemon""" ; Flags: runascurrentuser runhidden
-; Filename: "{sys}\sc.exe"; Parameters: "start ""GladiusNetworkDaemon""" ; Flags: runascurrentuser runhidden
-
+; ask to start ui on installation
 Filename: "{app}\gladius-electron-win32-x64\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-; Install and start gladius-networkd and gladius-controld as services
 
 [UninstallRun]
+; stop and uninstall guardian
 Filename: "{sys}\sc.exe"; Parameters: "stop ""GladiusGuardian""" ; Flags: runascurrentuser runhidden
 Filename: "{sys}\sc.exe"; Parameters: "delete ""GladiusGuardian""" ; Flags: runascurrentuser runhidden
-; Filename: "{sys}\sc.exe"; Parameters: "stop ""GladiusNodeControlDaemon""" ; Flags: runascurrentuser runhidden
-; Filename: "{sys}\sc.exe"; Parameters: "delete ""GladiusNodeControlDaemon""" ; Flags: runascurrentuser runhidden
-; Filename: "{sys}\sc.exe"; Parameters: "stop ""GladiusNetworkDaemon""" ; Flags: runascurrentuser runhidden
-; Filename: "{sys}\sc.exe"; Parameters: "delete ""GladiusNetworkDaemon""" ; Flags: runascurrentuser runhidden
-; Stop and uninstall gladius-networkd and gladius-controld as services
