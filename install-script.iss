@@ -20,6 +20,7 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
+CloseApplications=yes
 DisableProgramGroupPage=yes
 LicenseFile=LICENSE.txt
 InfoAfterFile=AfterText.rtf
@@ -43,6 +44,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "{sd}\Users\{username}\.gladius\content"
 
 [Files]
+Source: "gladius-network-gateway.exe";       DestDir: "{app}";                                    Flags: ignoreversion; BeforeInstall: TaskKill('gladius-network-gateway.exe')
+Source: "gladius-edged.exe";                 DestDir: "{app}";                                    Flags: ignoreversion; BeforeInstall: TaskKill('gladius-edged.exe')
+Source: "gladius-guardian.exe";              DestDir: "{app}";                                    Flags: ignoreversion; BeforeInstall: TaskKill('gladius-guardian.exe')
 Source: "gladius.exe";                       DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-network-gateway.exe";       DestDir: "{app}";                                    Flags: ignoreversion
 Source: "gladius-edged.exe";                 DestDir: "{app}";                                    Flags: ignoreversion
@@ -135,6 +139,13 @@ begin
   end;
 end;
 
+procedure TaskKill(FileName: String);
+var
+  ResultCode: Integer;
+begin
+    Exec(ExpandConstant('taskkill.exe'), '/f /im ' + '"' + FileName + '"', '', SW_HIDE,
+     ewWaitUntilTerminated, ResultCode);
+end;
 
 
 [Run]
