@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Gladius Node"
-#define MyAppVersion "0.7.0"
+#define MyAppVersion "0.7.2"
 #define MyAppPublisher "Gladius Network, LLC"
 #define MyAppURL "https://gladius.io"
 #define MyAppExeName "gladius-electron.exe"
@@ -149,3 +149,5 @@ Filename: "{app}\gladius-electron-win32-x64\{#MyAppExeName}"; Description: "{cm:
 ; stop and uninstall guardian
 Filename: "{sys}\sc.exe"; Parameters: "stop ""GladiusGuardian""" ; Flags: runascurrentuser runhidden
 Filename: "{sys}\sc.exe"; Parameters: "delete ""GladiusGuardian""" ; Flags: runascurrentuser runhidden
+Filename: "taskkill"; Parameters: "/im ""gladius-network-gateway.exe"" /f"; Flags: runascurrentuser runhidden
+Filename: "taskkill"; Parameters: "/im ""gladius-edged.exe"" /f"; Flags: runascurrentuser runhidden
